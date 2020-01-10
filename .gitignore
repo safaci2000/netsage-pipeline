@@ -3,3 +3,7 @@
 .*.swp
 conf/systemd/deploy
 ~
+.env
+input_data
+*.pyc
+data

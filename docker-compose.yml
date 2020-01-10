@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+    rabbit:
+       image: rabbitmq:3-management
+       env_file: .env
+       ports:
+         - "15672:15672"
+         - "5671:5671"
+         - "5672:5672"
+    nfdump_builder:         
+       image: netsage/pipeline/nfdump
+       build:
+          context: compose
+          dockerfile: ./Dockerfile
+    importer:
+       image: netsage/pipeline/nfdump
+       env_file: .env
+       depends_on: 
+         - rabbit
+       restart: always
+       command: netsage-netflow-importer-daemon --nofork  --config /etc/grnoc/netsage/deidentifier/netsage_netflow_importer.xml 
+       volumes:
+           - ./data:/data
+    deidentifier:
+       image: netsage/pipeline/nfdump
+       env_file: .env
+       depends_on: 
+         - rabbit
+         - importer
+       restart: always
+       command: /usr/bin/netsage-deidentifier-daemon --nofork --config /etc/grnoc/netsage/deidentifier/netsage_deidentifier.xml 
+       volumes:
+           - ./data:/data
+   #  rpm_builder:
+   #     image: netsage/pipeline/nfdump:builder
+   #     build:
+   #        context: .
+   #        dockerfile: ./compose/rpm/Dockerfile
+   #     env_file: .env
+   #     command: make rpm 
+   #     volumes:
+   #       - ./data/rpm:/home/coder/rpmbuild

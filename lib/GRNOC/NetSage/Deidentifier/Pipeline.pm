@@ -620,6 +620,8 @@ sub _rabbit_connect {
         catch {
 
             $self->logger->error( "Error connecting to $direction RabbitMQ: $_" );
+            $self->logger->error("queue_name: $rabbit_queue");
+            $self->logger->error("queue_channel: $rabbit_channel");
         };
 
         if ( $connected{'input'} && $connected{'output'}) {
