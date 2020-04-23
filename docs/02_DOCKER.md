@@ -1,8 +1,10 @@
 # Docker Setup
 
-## Retrieve Meta data.  Feel free to re-run  to update the data.  Set the correct username/password to match your credentials.
+## Retrieve Meta data.  Feel free to re-run  to update the data.
 
-SCIENCE_USER='user' SCIENCE_PWD='secret' ./initialize_docker_data.sh
+```sh
+./initialize_docker_data.sh
+````
 
 ## Build base images
 
