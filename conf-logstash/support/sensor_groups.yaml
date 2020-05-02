@@ -1,0 +1,7 @@
+'^.*TACC.*': "TACC"
+'^.*Hawaii.*': "Hawaii"
+'^.*NERSC.*': "NERSC"
+'^.*NEAAR.*': "NEAAR"
+'^.*TransPAC.*': "TransPAC"
+'^.*CENIC.*': "CENIC"
+'^.*PacWave.*': "PacWave"
