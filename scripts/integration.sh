@@ -3,6 +3,11 @@ set -e
 
 ## Validates code and publish image for tagged branch
 function integration_test {
+    if [ -z ${TRAVIS_TAG+x}  ]; then 
+        ./scripts/docker_select_version.sh  ${TRAVIS_TAG}
+    fi
+
+
     docker-compose -f docker-compose.build.yml build
     
     if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
@@ -14,8 +19,8 @@ function integration_test {
 ## Publish image to our docker hub repository
 function publish_image
 {
-    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    docker-compose -f docker-compose.build.yml push
+       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+       docker-compose -f docker-compose.build.yml push
 }
 
 function sanity_test
